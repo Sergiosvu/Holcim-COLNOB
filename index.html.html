@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz de Categorías</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #222;
+            color: white;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #1d4370;
+            padding: 15px;
+            box-sizing: border-box;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-250px);
+        }
+
+        .sidebar h2 {
+            margin: 0;
+            padding-bottom: 20px;
+            font-size: 22px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .category {
+            margin: 10px 0;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .category:hover,
+        .category.selected {
+            background-color: #04bbf1;
+            color: #00466b;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-left: 250px;
+            height: calc(100vh - 10px); /* Ajusta la altura según el espacio disponible */
+            position: relative;
+            background-image: url('inducción.png'); /* Cambia 'induccion.jpg' por el nombre correcto si es diferente */
+            background-size: cover;
+            background-position: center;
+}
+
+        .element {
+           background-color: #94c12e; /* O el color que prefieras */
+           color: #054274;
+           padding: 10px;
+           margin: 5px 0;
+           border-radius: 5px;
+           cursor: pointer;
+           text-align: center;
+           font-size: 14px;
+           background-size: cover;
+           background-position: center;
+           position: relative;
+           overflow: hidden;
+}
+        .element-container {
+            display: flex;
+            flex-wrap: wrap;
+            height: 100%;
+        }
+
+        .element-container .element {
+            width: 120px;
+            height: 120px;
+            margin: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>INDUCCION ESPECIFICA H&S</h2>
+        <div class="category" onclick="selectCategory(1)">HSE-001 Sistema de gestion de seguridad y salud</div>
+        <div class="category" onclick="selectCategory(2)">HSE-002 Reporte y clasificacion de incidentes</div>
+        <div class="category" onclick="selectCategory(3)">HSE-003 Elementos de proteccion personal</div>
+        <div class="category" onclick="selectCategory(4)">HSE-006 Bienestar y limpieza</div>
+        <div class="category" onclick="selectCategory(5)">HSE-101 Equipo movil y trafico dentro de las instalaciones</div>
+        <div class="category" onclick="selectCategory(6)">HSE-102 Trabajo en alturas </div>
+        <div class="category" onclick="selectCategory(7)">HSE-103 Aislamiento energetico</div>
+        <div class="category" onclick="selectCategory(8)">HSE-104 Espacios Confinados</div>
+        <div class="category" onclick="selectCategory(9)">HSE-105 Seguridad Electrica</div>
+        <div class="category" onclick="selectCategory(10)">HSE-106 Proteccion de maquinas</div>
+        <div class="category" onclick="selectCategory(11)">HSE-107 Trabajo en caliente</div>
+        <div class="category" onclick="selectCategory(12)">HSE-108 Elevacion y soporte de cargas</div>
+        <div class="category" onclick="selectCategory(13)">HSE-111 Norma de seguridad vial</div>
+        <div class="category" onclick="selectCategory(14)">HSE-202 Sustancias peligrosas</div>
+        <div class="category" onclick="selectCategory(15)">HSE-204 Ergonomia</div>
+        <div class="category" onclick="selectCategory(16)">Gestion de Controles Criticos</div>
+        <div class="category" onclick="selectCategory(17)">Seguridad en canteras</div>
+        <div class="category" onclick="selectCategory(18)">Actividad de evaluacion de conocimiento H&S</div>
+    </div>
+
+    <div class="content">
+        <div id="elements-container" class="element-container"></div>
+    </div>
+
+    <script>
+        const sidebar = document.querySelector('.sidebar');
+        const elementsContainer = document.getElementById('elements-container');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('hidden');
+        }
+
+        function selectCategory(categoryNumber) {
+            const categories = document.querySelectorAll('.category');
+            categories.forEach(category => category.classList.remove('selected'));
+            categories[categoryNumber - 1].classList.add('selected');
+
+            elementsContainer.innerHTML = ''; // Limpiar contenedor antes de mostrar nuevos elementos
+
+            switch (categoryNumber) {
+                case 1:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('1. POLITICA DE SALUD Y SEGURIDAD DECLARACION LOCAL.pdf')"> 
+                            1. Politica de Seguridad y Salud
+                        </div>
+                        <div class="element"  onclick="openPdf('Reglas de salud y seguridad.pdf')">
+                            2. Reglas Básicas de Seguridad 
+                        </div>
+                        <div class="element" onclick="playVideo('Video Peligro y riesgo.mp4')">
+                            3. Peligro y Riesgo Video
+                        </div>
+                        <div class="element"  onclick="openPdf('Plan de emergencias.pdf')">
+                            4. Plan de emergencias
+                        </div>
+                        <div class="element" onclick="playVideo('Video Plan respuesta emergencia.mp4')">
+                            5. Plan de respuesta emergencia Video
+                        </div>
+                        <div class="element"  onclick="openPdf('Programa BoG.pdf')">
+                            6. Programa BoG
+                        </div>
+                    `;
+                    break;
+                case 2:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('Reporte, Clasificación e investigación de AT V3.pdf')"> 
+                            1. Reporte, Clasificación e investigación de AT V3
+                        </div>
+                        <div class="element" onclick="openPdf('Guía HFACS.pdf')"> 
+                            2. Guía HFACS Supervisores
+                        </div>
+                        <div class="element" onclick="openPdf('Cartilla HFACS Vr2.pdf')"> 
+                            3. Cartilla HFACS Vr2
+                        </div>
+                        <div class="element" onclick="openPdf('Módulo Icare de Incidentes 3.0 Supervisores.pdf')"> 
+                            4. Módulo Icare de Incidentes 3.0 Supervisores
+                        </div>
+                    `;
+                    break;
+                case 3:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('Epp Generales.pdf')"> 
+                            1. EPP Generales
+                        </div>
+                        <div class="element" onclick="openPdf('EPP Proteccion de Manos.pdf')"> 
+                            2. EPP Proteccion de Manos
+                        </div>
+                        <div class="element" onclick="openPdf('EPP Proteccion respiratoria.pdf')"> 
+                            3. EPP Proteccion Respiratorio
+                        </div>
+                        <div class="element" onclick="openPdf('EPP Protección Auditiva.pdf')"> 
+                            4. EPP Protección Auditiva
+                        </div>
+                        <div class="element" onclick="playVideo('Vídeo Elemento de protección personal.mp4')">
+                            5. Vídeo: Elemento de protección personal
+                        </div>
+                    `;
+                    break;
+                case 4:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('Cemento Housekeeping - Expectativas Visuales Mínimas.pdf')">
+                            Cemento Housekeeping - Expectativas Visuales Mínimas
+                        </div>
+                        <div class="element" onclick="playVideo('Proximity - Trabajos en Caliente.mp4')">
+                            VIDEO: Proximity - Trabajos en Caliente
+                        </div>
+                    `;
+                    break;
+                case 5:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('HSE-101 Equipo Móvil Guía Visual.pdf')">
+                            1. HSE-101 Equipo Móvil Guía Visual
+                        </div>
+                        <div class="element" onclick="openPdf('HSE-101 Evitar vuelco durante descarga de material Visual.pdf')">
+                            2. HSE-101 Evitar vuelco durante descarga de material Visual
+                        </div>
+                        <div class="element" onclick="openPdf('Reglamento de tránsito interno y equipo movil V2.pdf')">
+                            3. Reglamento de tránsito interno y equipo movil V2
+                        </div>
+                        <div class="element" onclick="openPdf('Inspecciones preoperacionales equipo movil.pdf')">
+                            4. Inspecciones preoperacionales equipo movil
+                        </div>
+                        <div class="element" onclick="playVideo('HSE-101 Equipo movil.mp4')">
+                            5. VIDEO: HSE-101 Equipo movil
+                        </div>
+                    `;
+                    break;
+                case 6:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('HSE-102 Trabajo en Alturas Guía visual.pdf')">
+                            1. HSE-102 Trabajo en Alturas Guía visual
+                        </div>
+                        <div class="element" onclick="openPdf('Programa de prevención y protección contra caídas de alturas V3.pdf')">
+                            2. Programa de prevención y protección contra caídas de alturas V3
+                        </div>
+                        <div class="element" onclick="openPdf('Permiso de trabajo en alturas.pdf')">
+                            3. Permiso de trabajo en alturas
+                        </div>
+                        <div class="element" onclick="openPdf('Tarjeta Andamios.pdf')">
+                            4. Tarjeta Andamios
+                        </div>
+                        <div class="element" onclick="playVideo('HSE-102 Trabajo en alturas.mp4')">
+                            5. VIDEO: HSE-102 Trabajo en alturas
+                        </div>
+
+                    `;
+                    break;
+                case 7:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('HSE-103 Aislamiento de Energías Guía Visual.pdf')">
+                            1. HSE-103 Aislamiento de Energías Guía Visual
+                        </div>
+                        <div class="element" onclick="openPdf('Charla Aislamiento de energia.pdf')">
+                            2. Charla Aislamiento de energia
+                        </div>
+                        <div class="element" onclick="openPdf('Folleto del Programa de Aislamiento de Energía.pdf')">
+                            3. Folleto del Programa de Aislamiento de Energía
+                        </div>
+                        <div class="element" onclick="playVideo('HSE-103 Aislamiento de energia.mp4')">
+                            4. VIDEO: HSE-103 Aislamiento de energia
+                        </div>
+                        <div class="element" onclick="openPdf('PPT Aislamiento energia.pdf')">
+                            5. PPT Aislamiento energia
+                        </div>
+                        <div class="element" onclick="playVideo('Crear un nuevo procedimiento aislamiento.mp4')">
+                            6. VIDEO: Crear un nuevo procedimiento aislamiento
+                        </div>
+                    `;
+                    break;
+                case 8:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('HSE-104 Espacio Confinados Guía Visual.pdf')">
+                            1. HSE-104 Espacio Confinados Guía Visual
+                        </div>
+                        <div class="element" onclick="openPdf('Charla Espacios Confinados.pdf')">
+                            2. Charla Espacios Confinados
+                        </div>
+                        <div class="element" onclick="openPdf('Tarjeta ingreso- Espacios Confinados.pdf')">
+                            3. Tarjeta ingreso- Espacios Confinados
+                        </div>
+                        <div class="element" onclick="openPdf('Procedimiento de Espacios Confinados v3.pdf')">
+                            4. Procedimiento de Espacios Confinados v3
+                        </div>
+                        <div class="element" onclick="playVideo('HSE-104 Espacios confinados.mp4')">
+                            5. VIDEO: HSE-104 Espacios confinados
+                        </div>
+                    `;
+                    break;
+                case 9:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('1610114172333~D6 P 221 Trabajos en caliente v5.pdf')">
+                            PDF: 1610114172333~D6 P 221 Trabajos en caliente v5
+                        </div>
+                        <div class="element" onclick="openPdf('1610114200448~D6 P 221 F1 Permiso trabajos en caliente v5.pdf')">
+                            PDF: 1610114200448~D6 P 221 F1 Permiso trabajos en caliente v5
+                        </div>
+                        <div class="element" onclick="openPdf('HSS-107 Trabajo en Caliente Guía Visual.pdf')">
+                            PDF: HSS-107 Trabajo en Caliente Guía Visual
+                        </div>
+                        <div class="element" onclick="playVideo('Proximity - Trabajos en Caliente.mp4')">
+                            VIDEO: Proximity - Trabajos en Caliente
+                        </div>
+                    `;
+                    break;
+                case 10:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('HSE-106 Protección en Maquinaria Guía Visual.pdf')">
+                            1. HSE-106 Protección en Maquinaria Guía Visual
+                        </div>
+                        <div class="element" onclick="playVideo('Trabajos de explotación en cantera con excavadoras.mp4')">
+                            VIDEO: Trabajos de explotación en cantera con excavadoras
+                        </div>
+                    `;
+                    break;
+                case 11:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('HSE-107 Trabajo en Caliente Guía Visual.pdf')">
+                            1. HSE-107 Trabajo en Caliente Guía Visual
+                        </div>
+                        <div class="element" onclick="openPdf('Permiso de trabajo en caliente.pdf')">
+                            2. Permiso de trabajo en caliente
+                        </div>
+                        <div class="element" onclick="openPdf('Inspección equipos de trabajo en caliente.pdf')">
+                            3. Inspección equipos de trabajo en caliente
+                        </div>
+                        <div class="element" onclick="openPdf('Procedimiento de trabajo en caliente.pdf')">
+                            4. Procedimiento de trabajo en caliente
+                        </div>
+                        <div class="element" onclick="playVideo('FKL01 Mobile Equipment Operation Q2 2017.mp4')">
+                            5. VIDEO: FKL01 Mobile Equipment Operation Q2 2017
+                        </div>
+                    `;
+                    break;
+                case 12:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('HSE-108 Elevación y Soporte de Cargas Guia Visual.pdf')">
+                            1. HSE-108 Elevación y Soporte de Cargas Guia Visual
+                        </div>
+                    `;
+                    break;
+                case 13:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('HSS-108 Elevación y Soporte de Cargas Guía Visual.pdf')">
+                            PDF: HSS-108 Elevación y Soporte de Cargas Guía Visual
+                        </div>
+                    `;
+                    break;
+                case 14:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('HSS-108 Elevación y Soporte de Cargas Guía Visual.pdf')">
+                            PDF: HSS-108 Elevación y Soporte de Cargas Guía Visual
+                        </div>
+                    `;
+                    break;
+                case 15:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('HSS-108 Elevación y Soporte de Cargas Guía Visual.pdf')">
+                            PDF: HSS-108 Elevación y Soporte de Cargas Guía Visual
+                        </div>
+                    `;
+                    break;
+                case 16:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('CCM Guía del Programa completo.pdf')">
+                            CCM Guía del Programa completo
+                        </div>
+                        <div class="element" onclick="openPdf('Explosión en Molino de Carbón.pdf')">
+                            1. Explosión en Molino de Carbón
+                        </div>
+                        <div class="element" onclick="openPdf('Contacto con Energía Peligrosa.pdf')">
+                            2. Contacto con Energía Peligrosa
+                        </div>
+                        <div class="element" onclick="openPdf('Caída de Alturas.pdf')">
+                            3. Caída de Alturas
+                        </div>
+                        <div class="element" onclick="openPdf('Incendio por Combustible Líquido.pdf')">
+                            4. Incendio por Combustible Líquido
+                        </div>
+                        <div class="element" onclick="openPdf('Contacto con Material Caliente.pdf')">
+                            5. Contacto con Material Caliente
+                        </div>
+                        <div class="element" onclick="openPdf('Sepultamiento por Material.pdf')">
+                            6. Sepultamiento por Material
+                        </div>
+                        <div class="element" onclick="openPdf('Incidente equipo movil.pdf')">
+                            7. Incidente equipo movil
+                        </div>
+                         <div class="element" onclick="openPdf('Colapso Estructural.pdf')">
+                            8. Colapso Estructural
+                        </div>
+                        <div class="element" onclick="openPdf('Enfermedad Respiratoria Grave.pdf')">
+                            9. Enfermedad Respiratoria Grave
+                        </div>
+                        <div class="element" onclick="openPdf('Contaminación.pdf')">
+                            10. Contaminación
+                        </div>
+                        <div class="element" onclick="openPdf('Accidente Fatal de Tráfico.pdf')">
+                            11. Accidente Fatal de Tráfico
+                        </div>
+                        <div class="element" onclick="openPdf('Plan de Respuesta de Emergencia.pdf')">
+                            12. Plan de Respuesta de Emergencia
+                        </div>
+                    `;
+                    break;
+                case 17:
+                    elementsContainer.innerHTML = `
+                        <div class="element" onclick="openPdf('Reglamento de Seguridad en Canteras- Rev. 4.pdf')">
+                            1. Reglamento de Seguridad en Canteras- Rev. 4
+                        </div>
+                        <div class="element" onclick="openPdf('Manual de Seguridad de Canteras V.02.pdf')">
+                            2. Manual de Seguridad de Canteras V.02
+                        </div>
+                    `;
+                    break;
+                 case 18:
+                    elementsContainer.innerHTML = `
+                        
+                        </div>
+                    `;
+                    break;
+                default:
+                    elementsContainer.innerHTML = '<p>Selecciona una categoría para mostrar los elementos.</p>';
+            }
+        }
+
+        function playVideo(videoSrc) {
+            const video = document.createElement('video');
+            video.src = videoSrc;
+            video.controls = true;
+            video.autoplay = true;
+            video.style.width = '100%';
+            video.style.height = 'auto';
+            showMedia(video);
+        }
+
+        function openPdf(pdfSrc) {
+            const iframe = document.createElement('iframe');
+            iframe.src = pdfSrc;
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            showMedia(iframe);
+        }
+
+        function showMedia(mediaElement) {
+            elementsContainer.innerHTML = ''; // Limpiar contenedor actual
+            elementsContainer.appendChild(mediaElement);
+        }
+    </script>
+</body>
+</html>
